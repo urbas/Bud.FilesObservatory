@@ -14,6 +14,11 @@
     <releaseNotes>Initial release.</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Bud.FilesObservatory file system watcher observable file watch</tags>
+    <dependencies>
+      <dependency id="System.Reactive.Core" version="3.0.0" />
+      <dependency id="System.Reactive.Interfaces" version="3.0.0" />
+      <dependency id="System.Reactive.Linq" version="3.0.0" />
+    </dependencies>
   </metadata>
   <files>
     <file src="bin/Debug/Bud.FilesObservatory.dll" target="lib/net46" />
