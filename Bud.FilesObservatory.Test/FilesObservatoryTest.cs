@@ -137,7 +137,7 @@ namespace Bud {
           waitCountdown => {
             var observable = ObserveFileSystem(dir.Path,
                                                fileFilter: "*.txt",
-                                               includeSubdirectories: true,
+                                               recursive: true,
                                                subscribedCallback: () => {
                                                  waitCountdown.Signal();
                                                  ++subscriptionCount;
@@ -170,7 +170,7 @@ namespace Bud {
           waitCountdown => {
             var observable = ObserveFileSystem(dir.Path,
                                                fileFilter: "*.txt",
-                                               includeSubdirectories: true,
+                                               recursive: true,
                                                subscribedCallback: () => {
                                                  if (!waitCountdown.IsSet) {
                                                    waitCountdown.Signal();
@@ -204,10 +204,10 @@ namespace Bud {
         waitCountdown => Task.Run(() => {
           return ObserveFileSystem(tempDir.Path,
                                    fileFilter: "*.txt",
-                                   includeSubdirectories: true,
+                                   recursive: true,
                                    subscribedCallback: () => waitCountdown.Signal(),
                                    disposedCallback: () => disposingBarrier.Signal()).Take(1)
-            .Wait();
+                                                                                     .Wait();
         }),
         waitCountdown: 1);
 
@@ -218,10 +218,10 @@ namespace Bud {
         waitCountdown => Task.Run(
           () => ObserveFileSystem(tempDir.Path,
                                   fileFilter: "*.txt",
-                                  includeSubdirectories: true,
+                                  recursive: true,
                                   subscribedCallback: () => waitCountdown.Signal(),
                                   disposedCallback: disposedCallback).Take(expectedChangesCount)
-                  .ToEnumerable().ToList()),
+                                                                     .ToEnumerable().ToList()),
         waitCountdown: 1);
 
     private static Task<List<string>> ObserveMergedFileChanges(string dirA,

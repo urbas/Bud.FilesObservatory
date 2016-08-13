@@ -4,6 +4,9 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
 namespace Bud {
+  /// <summary>
+  ///   This reactive wrappers for FileSystemWatcher.
+  /// </summary>
   public static class FilesObservatory {
     /// <returns>
     ///   an observable (the observatory) that produces a stream of files and directories
@@ -16,7 +19,7 @@ namespace Bud {
     ///   only files that match this filter will be tracked. You can use the '*' wildcard. For example,
     ///   a filter of "<c>*.txt</c>" will watch all files with the "<c>.txt</c>" extension.
     /// </param>
-    /// <param name="includeSubdirectories">
+    /// <param name="recursive">
     ///   indicates whether changes in subdirectories
     ///   should be tracked too.
     /// </param>
@@ -47,12 +50,12 @@ namespace Bud {
     /// </remarks>
     public static IObservable<string> ObserveFileSystem(string dir,
                                                         string fileFilter,
-                                                        bool includeSubdirectories,
+                                                        bool recursive,
                                                         Action subscribedCallback = null,
                                                         Action disposedCallback = null)
       => Observable.Create<string>(observer => {
         var compositeDisposable = new CompositeDisposable {
-          new FileSystemObserver(dir, fileFilter, includeSubdirectories, observer),
+          new FileSystemObserver(dir, fileFilter, recursive, observer),
           new CallbackDisposable(disposedCallback)
         };
         subscribedCallback?.Invoke();
